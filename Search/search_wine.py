@@ -50,3 +50,7 @@ results = search_dataframe(user_input, df)
 # Display the results
 print("Matching items:")
 print(results)
+
+
+# data = pd.read_csv('Data/cleaned_data.csv')
+# print(data.head)
