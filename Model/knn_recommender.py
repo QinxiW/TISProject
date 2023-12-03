@@ -14,17 +14,16 @@ import pickle
 #     loaded_dict = pickle.load(file)
 
 def build_data(df):
-    #     cols_to_keep = ['id', 'country_cleaned',
-    #                     'description_cleaned_tokenized', 'sentiment', #'sentiment_score',
-    #                     'designation_cleaned', 'points', 'price_imputated', 'province_leveled_cleaned',
-    #                     'region', 'taster_name_cleaned',
-    #                     'title_cleaned', 'variety_cleaned', 'winery_cleaned', 'wine_year_imputated']
-    # data_col = ['country_cleaned', ]
-    data_recommend = df[['province', 'variety', 'points']]
+    # cols_to_keep = ['country_cleaned', 'province_leveled_cleaned', 'designation_cleaned',
+    #                 # 'description_cleaned_tokenized',
+    #                 'sentiment', 'sentiment_score', 'points', 'price_imputated',
+    #                 'region', 'taster_name_cleaned',
+    #                 'title_cleaned', 'variety_cleaned', 'winery_cleaned', 'wine_year_imputated']
+    data_recommend = df[['province_leveled_cleaned', 'variety_cleaned', 'sentiment_score']]
     data_recommend.dropna(axis=0, inplace=True)
-    data_recommend.drop_duplicates(['province', 'variety'], inplace=True)
+    data_recommend.drop_duplicates(['province_leveled_cleaned', 'variety_cleaned'], inplace=True)
 
-    data_pivot = data_recommend.pivot(index='variety', columns='province', values='points').fillna(0)
+    data_pivot = data_recommend.pivot(index='variety_cleaned', columns='province_leveled_cleaned', values='sentiment_score').fillna(0)
     data_matrix = csr_matrix(data_pivot)
 
     # joblib.dump(data_matrix, 'Search/data_matrix.joblib')
@@ -46,12 +45,12 @@ def build_model(data_matrix):
 
 
 def main():
-    df = pd.read_csv('Data/cleaned_data.csv.gz')
+    df = pd.read_csv('Data/search.csv.gz')
     data_matrix, data_pivot = build_data(df)
 
     model_knn = build_model(data_matrix)
 
-    for n in range(5):
+    for _ in range(5):
         query_index = np.random.choice(data_pivot.shape[0])
         # print(n, query_index)
         distance, indice = model_knn.kneighbors(data_pivot.iloc[query_index].values.reshape(1, -1), n_neighbors=6)

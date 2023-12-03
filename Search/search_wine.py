@@ -7,12 +7,13 @@ import nltk
 import re
 import time
 from rapidfuzz import fuzz, process
+from rec_inference import recommend
 
 # Implement functionality where a user can search, select,
 # and retrieve similar / recommended wines
 
 # Choose a threshold for matching (e.g., 80)
-threshold = 80
+threshold = 96
 
 # search_term = 'aroma'
 # column_name = 'description_lemmatized_eng'
@@ -24,10 +25,11 @@ def search_dataframe(user_input, dataframe):
     # Empty DataFrame to store results
     results = pd.DataFrame()
 
-    cols_to_search = ['country_cleaned', 'description_cleaned_tokenized', 'sentiment',
-                      'designation_cleaned', 'points', 'price_imputated', 'province_leveled_cleaned',
-                        'region', 'taster_name_cleaned',
-                    'title_cleaned', 'variety_cleaned', 'winery_cleaned', 'wine_year_imputated']
+    # cols_to_search = ['country_cleaned', 'description_cleaned_tokenized', 'sentiment',
+    #                   'designation_cleaned', 'points', 'price_imputated', 'province_leveled_cleaned',
+    #                     'region', 'taster_name_cleaned',
+    #                 'title_cleaned', 'variety_cleaned', 'winery_cleaned', 'wine_year_imputated']
+    cols_to_search = ['combined']
 
     # Iterate through columns we index on
     for column in cols_to_search:
@@ -53,6 +55,8 @@ def search_dataframe(user_input, dataframe):
 def main():
     df = pd.read_csv('Data/search.csv.gz')
     df['wine_year_imputated'] = df['wine_year_imputated'].fillna(0).astype(int)
+
+    df['combined'] = df.apply(lambda row: ' '.join(map(str, row)), axis=1)
     while True:
         # Get user input
         user_input = input("Search for wine, exit to leave: ")
@@ -66,7 +70,10 @@ def main():
 
         # Display the results
         print("Matching items:")
-        print(results)
+        print(results[['variety_cleaned', 'province_leveled_cleaned']])
+
+        # call rec inference:
+        recommend(results['variety_cleaned'].tolist())
 
 
 if __name__ == '__main__':

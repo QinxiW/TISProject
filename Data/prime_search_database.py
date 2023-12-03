@@ -30,12 +30,11 @@ def main():
     #       dtype='object')
     df['region'] = df['region_1_leveled'].fillna(df['region_2_leveled'])
 
-    cols_to_keep = ['id', 'country_cleaned',
-                    'description_cleaned_tokenized', 'sentiment', #'sentiment_score',
-                    'designation_cleaned', 'points', 'price_imputated', 'province_leveled_cleaned',
+    cols_to_keep = ['country_cleaned', 'province_leveled_cleaned', 'designation_cleaned',
+                    # 'description_cleaned_tokenized',
+                    'sentiment', 'sentiment_score', 'points', 'price_imputated',
                     'region', 'taster_name_cleaned',
                     'title_cleaned', 'variety_cleaned', 'winery_cleaned', 'wine_year_imputated']
-                    # 'total_reviews_by_taster_on_title', 'total_unique_score_by_taster_on_title']
 
     df[cols_to_keep].to_csv('Data/search.csv')
 
