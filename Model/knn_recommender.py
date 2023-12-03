@@ -2,17 +2,37 @@ import pandas as pd
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 from scipy.sparse import csr_matrix
-from sklearn.decomposition import TruncatedSVD
 import joblib
+import pickle
 
+# # Save dictionary to a file
+# with open('data.pkl', 'wb') as file:
+#     pickle.dump(your_dict, file)
+#
+# # Load dictionary from the file in another script
+# with open('data.pkl', 'rb') as file:
+#     loaded_dict = pickle.load(file)
 
 def build_data(df):
+    #     cols_to_keep = ['id', 'country_cleaned',
+    #                     'description_cleaned_tokenized', 'sentiment', #'sentiment_score',
+    #                     'designation_cleaned', 'points', 'price_imputated', 'province_leveled_cleaned',
+    #                     'region', 'taster_name_cleaned',
+    #                     'title_cleaned', 'variety_cleaned', 'winery_cleaned', 'wine_year_imputated']
+    # data_col = ['country_cleaned', ]
     data_recommend = df[['province', 'variety', 'points']]
     data_recommend.dropna(axis=0, inplace=True)
     data_recommend.drop_duplicates(['province', 'variety'], inplace=True)
 
     data_pivot = data_recommend.pivot(index='variety', columns='province', values='points').fillna(0)
     data_matrix = csr_matrix(data_pivot)
+
+    # joblib.dump(data_matrix, 'Search/data_matrix.joblib')
+    with open('data_matrix.pkl', 'wb') as file:
+        pickle.dump(data_matrix, file)
+    with open('data_pivot.pkl', 'wb') as file:
+        pickle.dump(data_pivot, file)
+    # joblib.dump(data_pivot, 'Search/data_pivot.joblib')
     return data_matrix, data_pivot
 
 
