@@ -48,7 +48,7 @@ def main():
     df = pd.read_csv("Data/cleaned_data.csv.gz")
     print("df head: ", df.head())
 
-    X_train, X_test, y_train, y_test = data_split(df=df, label=df.points)
+    X_train, X_test, y_train, y_test = data_split(df=df, label=df.points > 92)
 
     random_forest = model_train(X_train=X_train, y_train=y_train)
 
