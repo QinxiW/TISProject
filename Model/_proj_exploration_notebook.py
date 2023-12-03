@@ -29,7 +29,7 @@ MAIN_DIR = "drive/MyDrive"
 # MAIN_DIR = "drive/MyDrive/metamia"
 
 # !pip install transformers
-!pip install transformers[torch]
+# !pip install transformers[torch]
 
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset, random_split
@@ -42,9 +42,9 @@ df.head()
 
 """# New Section"""
 
-df.columns
+# df.columns
 
-df.dtypes
+# df.dtypes
 
 # train_texts, train_labels = df['document'].values, df['label'].values
 
@@ -58,7 +58,7 @@ sentiment_pipeline = pipeline("sentiment-analysis")
 
 specific_model = pipeline(model="finiteautomata/bertweet-base-sentiment-analysis")
 
-!pip install accelerate -U
+# !pip install accelerate -U
 
 df.points.describe()
 
