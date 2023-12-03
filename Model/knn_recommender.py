@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.neighbors import NearestNeighbors
 from scipy.sparse import csr_matrix
 from sklearn.decomposition import TruncatedSVD
+import joblib
 
 
 def build_data(df):
@@ -19,6 +20,8 @@ def build_model(data_matrix):
     knn = NearestNeighbors(n_neighbors=10, algorithm='brute', metric='cosine')
     model_knn = knn.fit(data_matrix)
 
+    joblib.dump(model_knn, 'Search/knn_model.joblib')
+
     return model_knn
 
 
@@ -34,7 +37,7 @@ def main():
         distance, indice = model_knn.kneighbors(data_pivot.iloc[query_index].values.reshape(1, -1), n_neighbors=6)
         for i in range(0, len(distance.flatten())):
             if i == 0:
-                print('Recmmendation for ## {0} ##:'.format(data_pivot.index[query_index]))
+                print('Recommendation for ## {0} ##:'.format(data_pivot.index[query_index]))
             else:
                 print('{0}: {1} with distance: {2}'.format(i, data_pivot.index[indice.flatten()[i]],
                                                            distance.flatten()[i]))
