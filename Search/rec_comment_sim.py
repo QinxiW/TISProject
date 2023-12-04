@@ -25,6 +25,9 @@ def rec_and_sim_comment(var_list):
 
 def single_rec(variety, cosine_sim=cosine_sim):
     # Get the index of the input wine
+    if variety not in indices:
+        return
+
     idx = indices[variety]
 
     # Get the pairwise similarity scores between the input wine and all the wines
