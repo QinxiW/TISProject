@@ -4,6 +4,8 @@ from sklearn.metrics.pairwise import linear_kernel
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import TruncatedSVD
 
+import joblib
+import pickle
 
 def data_split(wine_df):
     wine_df.loc[:, 'wineId'] = wine_df.loc[:, 'title'].astype('category').cat.codes

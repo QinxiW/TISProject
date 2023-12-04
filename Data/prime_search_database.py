@@ -28,10 +28,11 @@ def main():
     #        'description_cleaned_tokenized', 'description_lemmatized_eng',
     #        'description_processed_text'],
     #       dtype='object')
+
     df['region'] = df['region_1_leveled'].fillna(df['region_2_leveled'])
 
     cols_to_keep = ['country_cleaned', 'province_leveled_cleaned', 'designation_cleaned',
-                    # 'description_cleaned_tokenized',
+                    'description_cleaned_tokenized',
                     'sentiment', 'sentiment_score', 'points', 'price_imputated',
                     'region', 'taster_name_cleaned',
                     'title_cleaned', 'variety_cleaned', 'winery_cleaned', 'wine_year_imputated']
