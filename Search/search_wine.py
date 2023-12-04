@@ -8,6 +8,7 @@ import re
 import time
 from rapidfuzz import fuzz, process
 from rec_inference import recommend
+from rec_comment_sim import rec_and_sim_comment
 
 # Implement functionality where a user can search, select,
 # and retrieve similar / recommended wines
@@ -74,6 +75,8 @@ def main():
 
         # call rec inference:
         recommend(results['variety_cleaned'].tolist())
+
+        rec_and_sim_comment(results['variety_cleaned'].tolist())
 
 
 if __name__ == '__main__':

@@ -18,7 +18,12 @@ with open('Search/variety_multi_reviews.pkl', 'rb') as file:
     variety_multi_reviews = pickle.load(file)
 
 
-def rec_and_sim_comment(variety, cosine_sim=cosine_sim):
+def rec_and_sim_comment(var_list):
+    for variety in var_list:
+        print(single_rec(variety))
+
+
+def single_rec(variety, cosine_sim=cosine_sim):
     # Get the index of the input wine
     idx = indices[variety]
 
@@ -44,7 +49,7 @@ def rec_and_sim_comment(variety, cosine_sim=cosine_sim):
         # Get top 6 common words in the review
         des = variety_description_2.iloc[wine_idx]["description"]
 
-        if g_variety in variety_multi_reviews:     # If the wine has more than one reviews
+        if g_variety in variety_multi_reviews:  # If the wine has more than one reviews
             des_split = des.split(", ")
             key_words_list = des_split[:6]
             key_words_str = ", ".join(key_words_list)
@@ -52,7 +57,7 @@ def rec_and_sim_comment(variety, cosine_sim=cosine_sim):
         else:
             key_words_str = des
 
-        new_row ={"similar wines": g_variety, "Top 6 common words in wine reviews": key_words_str}
+        new_row = {"similar wines": g_variety, "Top 6 common words in wine reviews": key_words_str}
         df = df._append(new_row, ignore_index=True)
 
     df.set_index("similar wines")
