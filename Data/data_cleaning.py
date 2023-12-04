@@ -1,6 +1,6 @@
 """
-This workflow performs data cleaning and processing of the following steps:
-Step 1: Create Id
+This trask performs data cleaning and processing of the following steps:
+Step 1: Create Id for wine
 Step 2: Level geographic fields
 Step 3: Add currency for price
 Step 4: Clean text columns

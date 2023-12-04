@@ -1,5 +1,5 @@
 """
-This workflow primes data processing to optimize other downstream data tasks:
+This task primes data processing to optimize other downstream data tasks:
 Step 1: Loads the cleaned and sentiment fine-tuned dataframe
 Step 2: Split the sentiment dict column into a separate label and score column
 Step 3: Create a unified region level among the two regions
