@@ -1,3 +1,12 @@
+"""
+This workflow primes data processing to optimize other downstream data tasks:
+Step 1: Loads the cleaned and sentiment fine-tuned dataframe
+Step 2: Split the sentiment dict column into a separate label and score column
+Step 3: Create a unified region level among the two regions
+Step 4: Select the relevant columns useful in search functions
+Step 5: Save the final dataframe to a output file
+"""
+
 import pandas as pd
 import numpy as np
 import ast

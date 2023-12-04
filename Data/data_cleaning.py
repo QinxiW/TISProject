@@ -1,4 +1,16 @@
-#!/usr/bin/env python
+"""
+This workflow performs data cleaning and processing of the following steps:
+Step 1: Create Id
+Step 2: Level geographic fields
+Step 3: Add currency for price
+Step 4: Clean text columns
+Step 5: Extract wine year
+Step 6: Fill missing data by imputation
+Step 7: Remove duplicated values
+Step 8: Indicate repeated viewer but unique taster-title to dataframe
+Step 9: Find similar winery, province, region, designation and fix typo
+Step 10: NLP cleanup reviews
+"""
 import pandas as pd
 import numpy as np
 import string
@@ -17,19 +29,6 @@ nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
 
-"""
-This workflow performs data cleaning and processing of the following steps:
-Step 1: Create Id
-Step 2: Level geographic fields
-Step 3: Add currency for price
-Step 4: Clean text columns
-Step 5: Extract wine year
-Step 6: Fill missing data by imputation
-Step 7: Remove duplicated values
-Step 8: Indicate repeated viewer but unique taster-title to dataframe
-Step 9: Find similar winery, province, region, designation and fix typo
-Step 10: NLP cleanup reviews
-"""
 logger = logging.Logger('data_clea')
 
 text_columns = ['country', 'description', 'designation', 'province_leveled', 'region_1_leveled', 'region_2_leveled',
