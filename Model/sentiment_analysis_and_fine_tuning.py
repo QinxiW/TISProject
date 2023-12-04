@@ -13,6 +13,10 @@ import json
 import pandas as pd
 
 
+def limit_words(word_list, max_words=128):
+    return word_list[:max_words]
+
+
 def main():
     seed = 42
     np.random.seed(seed)

@@ -172,6 +172,10 @@ def main(file_location_path: str):
 
 
 if __name__ == "__main__":
+    """
+    For conciseness we did not include the original dataset in the path for git but only local reference
+    the dataset used for this project can be found at: https://www.kaggle.com/datasets/zynicide/wine-reviews/data
+    """
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("file_location_path", type=str, help="file location of the csv")
