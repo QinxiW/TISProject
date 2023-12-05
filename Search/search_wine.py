@@ -16,7 +16,7 @@ import nltk
 import re
 import time
 from rapidfuzz import fuzz, process
-from rec_inference import recommend
+from rec_inference import recommend, recommend_single
 from rec_comment_sim import rec_and_sim_comment, single_rec
 
 # Implement functionality where a user can search, select,
@@ -82,10 +82,10 @@ def main():
         print("Matching items:")
         print(results[['variety_cleaned', 'province_leveled_cleaned']])
 
-        # call rec inference for wine similarity
-        recommend(results['variety_cleaned'].tolist())
-        # call rec inference for comments similarity
-        rec_and_sim_comment(results['variety_cleaned'].tolist())
+        # call rec inference for wine similarity and comments similarity
+        for variety in results['variety_cleaned'].tolist():
+            recommend_single(variety)
+            single_rec(variety)
 
 
 if __name__ == '__main__':
