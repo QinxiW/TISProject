@@ -42,8 +42,8 @@ def search_dataframe(user_input, dataframe):
 
     # Iterate through columns we index on
     for column in cols_to_search:
-        if 'good' in user_input or 'great' in user_input:
-            dataframe = dataframe[dataframe.sentiment == 'POS']
+        # if 'good' in user_input or 'great' in user_input:
+        #     dataframe = dataframe[dataframe.sentiment == 'POS']
         # Use rapidfuzz to calculate similarity score
         similarity_scores = dataframe[column].apply(lambda x: fuzz.partial_ratio(user_input, str(x)))
         # print('similarity_scores', similarity_scores)
@@ -68,18 +68,22 @@ def search_dataframe(user_input, dataframe):
 
     # Drop duplicates from the results
     results = results.drop_duplicates()
-
     return results
 
 
 def main():
-    print('Welcome to the wine community!')
-    df = pd.read_csv('Data/search.csv.gz')
+    print('Welcome to the wine community! We hope you will find wine you enjoy here via search and recommendation.')
+    df = pd.read_csv('Data/cleaned_data.csv.gz')
+    comb_rows = ['country_cleaned', 'province_leveled_cleaned', 'designation_cleaned',
+                    'description_cleaned_tokenized', 'points', 'price_imputated',
+                    'taster_name_cleaned', 'title_cleaned', 'variety_cleaned', 'winery_cleaned', 'wine_year_imputated']
     # df['wine_year_imputated'] = df['wine_year_imputated'].fillna(0).astype(int)
-    df['combined'] = df.apply(lambda row: ' '.join(map(str, row)), axis=1)
+    print("Let's start by telling me about what wine you are looking for. Type exit to leave anytime.")
+    df['combined'] = df[comb_rows].apply(lambda row: ' '.join(map(str, row)), axis=1)
     while True:
         # Get user input
-        user_input = input("Search for wine, exit to leave: ")
+        user_input = input("you can search with a short phrases what type of wine (e.g 'sherry', 'italian') "
+                           "or wine attributes (e.g 'aromatic', 'fruit flavors'): ")
 
         if user_input.lower() == 'exit':
             print("Exiting...")
@@ -87,10 +91,22 @@ def main():
 
         # Search the DataFrame
         user_input = user_input.lower()
-        results = search_dataframe(user_input, df)
+        results = search_dataframe(user_input, df[['combined', 'variety_cleaned', 'title', 'country', 'price']])
+        results['price'].fillna(0, inplace=True)
+        print("\nGot it!\n")
 
         # Display the results
-        print("We found the following wine title based on your search:", results.title_cleaned.tolist())
+        print("We found the following wine title based on your search:\n")
+        for i in range(len(results)):
+            titles = results.title.tolist()
+            prices = results.price.tolist()
+            countries = results.country.tolist()
+            if prices[i]:
+                price = " $" + str(int(prices[i]))
+            else:
+                price = ""
+            print(i+1, ": ", titles[i] + " from " + countries[i] + "-" + price)
+        print("\n")
         # print(results[['variety_cleaned', 'province_leveled_cleaned']])
 
         time.sleep(1)
@@ -98,6 +114,7 @@ def main():
         for variety in results['variety_cleaned'].tolist():
             recommend_single(variety)
             print("\n")
+            break
 
 
 if __name__ == '__main__':
