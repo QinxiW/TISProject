@@ -47,8 +47,7 @@ def search_dataframe(user_input, dataframe):
             dataframe = dataframe[dataframe.sentiment == 'POS']
         # Use rapidfuzz to calculate similarity score
         similarity_scores = dataframe[column].apply(lambda x: fuzz.partial_ratio(user_input, str(x)))
-        print('similarity_scores', similarity_scores)
-
+        # print('similarity_scores', similarity_scores)
         # similarity_scores = dataframe[column].apply(lambda x: process.extractOne(user_input, str(x))[1] >= threshold)
 
         # Filter rows based on a threshold (e.g., 70% similarity)
@@ -62,8 +61,8 @@ def search_dataframe(user_input, dataframe):
 
         # Filter the top 3 rows
         top3_matches = result_df.head(3)
-        if len(top3_matches):
-            print('colum: ', column, 'matches: \n', matches)
+        # if len(top3_matches):
+        #     print('colum: ', column, 'matches: \n', matches)
 
         # Add the matches to the results DataFrame
         results = pd.concat([results, top3_matches])
@@ -92,13 +91,13 @@ def main():
         results = search_dataframe(user_input, df)
 
         # Display the results
-        print("Matching items:")
-        print(results[['variety_cleaned', 'province_leveled_cleaned']])
+        print("Matching items:", results.title_cleaned.tolist())
+        # print(results[['variety_cleaned', 'province_leveled_cleaned']])
 
         # call rec inference for wine similarity and comments similarity
         for variety in results['variety_cleaned'].tolist():
             recommend_single(variety)
-            single_rec(variety)
+            print(single_rec(variety))
 
 
 if __name__ == '__main__':

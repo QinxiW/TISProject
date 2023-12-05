@@ -72,7 +72,7 @@ def single_rec(variety, cosine_sim=cosine_sim):
         else:
             key_words_str = des
 
-        new_row = {"similar wines": review_variety, "Top 6 common words in wine reviews": key_words_str}
+        new_row = {"similar wines": review_variety, "Top common words in wine reviews": key_words_str}
         df = df._append(new_row, ignore_index=True)
 
     df.set_index("similar wines")

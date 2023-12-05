@@ -26,14 +26,15 @@ def recommend_single(variety):
     distance, indice = loaded_model.kneighbors(data_pivot.iloc[query_index].values.reshape(1, -1), n_neighbors=6)
     for i in range(0, len(distance.flatten())):
         if i == 0:
-            print('Recmmendation for ## {0} ##:'.format(data_pivot.index[query_index]))
+            # print('Recmmendation for ## {0} ##:'.format(data_pivot.index[query_index]))
+            print('Finding wines similar to your search..')
         else:
             # convert back to wine title
             wines = wine_df[wine_df['variety_cleaned'] == variety]
             print('{0}: {1} with distance: {2}'.format(i, data_pivot.index[indice.flatten()[i]],
                                                        distance.flatten()[i]))
-            print('wines recommended for you: ', wines[['title_cleaned']][:5])
-    print('\n')
+            print('wines recommended for you: ', wines.title_cleaned.tolist()[:3])
+            print('\n')
 
 
 def recommend(varieties: list):
