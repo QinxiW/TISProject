@@ -1,3 +1,12 @@
+"""
+This is the main task where a user can search, select,and retrieve similar / recommended wines.
+The functionality is built using interactive command line input exchange, where a user can search
+in english words or short phrases what type of wine (e.g 'sherry', 'italian') or wine attributes
+they want (e.g 'aromatic', 'fruit flavors'). These are then used as search phrases against our
+database, the top retrieval quality wines are then anchored to use for additional recommendation
+inference, and added the final results matched for the user: 'we found these wines for you based
+on your search, similar wines related to your search also include...'
+"""
 #!/usr/bin/env python
 import pandas as pd
 import numpy as np
@@ -8,12 +17,12 @@ import re
 import time
 from rapidfuzz import fuzz, process
 from rec_inference import recommend
-from rec_comment_sim import rec_and_sim_comment
+from rec_comment_sim import rec_and_sim_comment, single_rec
 
 # Implement functionality where a user can search, select,
 # and retrieve similar / recommended wines
 
-# Choose a threshold for matching (e.g., 80)
+# threshold for matching [0, 100]
 threshold = 96
 
 # search_term = 'aroma'
@@ -73,9 +82,9 @@ def main():
         print("Matching items:")
         print(results[['variety_cleaned', 'province_leveled_cleaned']])
 
-        # call rec inference:
+        # call rec inference for wine similarity
         recommend(results['variety_cleaned'].tolist())
-
+        # call rec inference for comments similarity
         rec_and_sim_comment(results['variety_cleaned'].tolist())
 
 
