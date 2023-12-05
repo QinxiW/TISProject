@@ -8,6 +8,7 @@ import joblib
 import pickle
 import numpy as np
 import pandas as pd
+from rec_comment_sim import rec_and_sim_comment, single_rec
 
 loaded_model = joblib.load('Search/knn_model.joblib')
 
@@ -27,14 +28,19 @@ def recommend_single(variety):
     for i in range(0, len(distance.flatten())):
         if i == 0:
             # print('Recmmendation for ## {0} ##:'.format(data_pivot.index[query_index]))
-            print('Finding wines similar to your search..')
+            wines = wine_df[wine_df['variety_cleaned'] == variety]
+            print('Finding wines similar to your search, we recommend ', wines.title_cleaned.tolist()[:3])
         else:
             # convert back to wine title
-            wines = wine_df[wine_df['variety_cleaned'] == variety]
-            print('{0}: {1} with distance: {2}'.format(i, data_pivot.index[indice.flatten()[i]],
-                                                       distance.flatten()[i]))
-            print('wines recommended for you: ', wines.title_cleaned.tolist()[:3])
-            print('\n')
+            # wines = wine_df[wine_df['variety_cleaned'] == variety]
+            percent_score = "{:.0%}".format(1 - distance.flatten()[i])
+            sim_var = data_pivot.index[indice.flatten()[i]]
+            print('Here are some wine variety we think you will like: {0} with recommendation score: {1}'.format(
+                sim_var,
+                percent_score))
+            print(single_rec(sim_var)['common_words'].tolist())
+            # print('Similar wine recommended for you: ', wines.title_cleaned.tolist()[:3], 'with')
+            # print('\n')
 
 
 def recommend(varieties: list):

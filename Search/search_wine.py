@@ -17,7 +17,6 @@ import re
 import time
 from rapidfuzz import fuzz, process
 from rec_inference import recommend, recommend_single
-from rec_comment_sim import rec_and_sim_comment, single_rec
 
 # Implement functionality where a user can search, select,
 # and retrieve similar / recommended wines
@@ -74,9 +73,9 @@ def search_dataframe(user_input, dataframe):
 
 
 def main():
+    print('Welcome to the wine community!')
     df = pd.read_csv('Data/search.csv.gz')
-    df['wine_year_imputated'] = df['wine_year_imputated'].fillna(0).astype(int)
-
+    # df['wine_year_imputated'] = df['wine_year_imputated'].fillna(0).astype(int)
     df['combined'] = df.apply(lambda row: ' '.join(map(str, row)), axis=1)
     while True:
         # Get user input
@@ -91,13 +90,14 @@ def main():
         results = search_dataframe(user_input, df)
 
         # Display the results
-        print("Matching items:", results.title_cleaned.tolist())
+        print("We found the following wine title based on your search:", results.title_cleaned.tolist())
         # print(results[['variety_cleaned', 'province_leveled_cleaned']])
 
+        time.sleep(1)
         # call rec inference for wine similarity and comments similarity
         for variety in results['variety_cleaned'].tolist():
             recommend_single(variety)
-            print(single_rec(variety))
+            print("\n")
 
 
 if __name__ == '__main__':

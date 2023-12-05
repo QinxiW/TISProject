@@ -37,9 +37,10 @@ def rec_and_sim_comment(var_list):
 
 
 def single_rec(variety, cosine_sim=cosine_sim):
+    all_keys = set()
     # Get the index of the input wine
     if variety not in indices:
-        return
+        return pd.DataFrame(columns=["similar_wines", "common_words"])
 
     idx = indices[variety]
 
@@ -56,7 +57,7 @@ def single_rec(variety, cosine_sim=cosine_sim):
     wine_idx_list = [i[0] for i in sim_scores]
 
     # Create the output dataframe
-    df = pd.DataFrame(columns=["similar wines", "Top common words in wine reviews"])
+    df = pd.DataFrame(columns=["similar_wines", "common_words"])
 
     for wine_idx in wine_idx_list:
         review_variety = variety_description_2.iloc[wine_idx]["variety"]
@@ -66,16 +67,22 @@ def single_rec(variety, cosine_sim=cosine_sim):
 
         if review_variety in variety_multi_reviews:
             des_split = des.split(", ")
-            key_words_list = des_split[:6]  # cap at 6 but changbale
+            key_words_list = des_split[:6]  # cap at 6 but changable
+            for key in key_words_list:
+                if key in all_keys:
+                    key_words_list.remove(key)
+                else:
+                    all_keys.add(key)
+
             key_words_str = ", ".join(key_words_list)
 
         else:
             key_words_str = des
 
-        new_row = {"similar wines": review_variety, "Top common words in wine reviews": key_words_str}
+        new_row = {"similar_wines": review_variety, "common_words": key_words_str}
         df = df._append(new_row, ignore_index=True)
 
-    df.set_index("similar wines")
+    df.set_index("similar_wines")
 
     # Widen the column width so that all common words could be displayed
     pd.set_option('max_colwidth', 500)
