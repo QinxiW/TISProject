@@ -56,17 +56,17 @@ def single_rec(variety, cosine_sim=cosine_sim):
     wine_idx_list = [i[0] for i in sim_scores]
 
     # Create the output dataframe
-    df = pd.DataFrame(columns=["similar wines", "Top 6 common words in wine reviews"])
+    df = pd.DataFrame(columns=["similar wines", "Top common words in wine reviews"])
 
     for wine_idx in wine_idx_list:
         review_variety = variety_description_2.iloc[wine_idx]["variety"]
 
-        # Get top 6 common words in the review
+        # Get top common words in the review
         des = variety_description_2.iloc[wine_idx]["description"]
 
-        if review_variety in variety_multi_reviews:  # If the wine has more than one reviews
+        if review_variety in variety_multi_reviews:
             des_split = des.split(", ")
-            key_words_list = des_split[:6]
+            key_words_list = des_split[:6]  # cap at 6 but changbale
             key_words_str = ", ".join(key_words_list)
 
         else:

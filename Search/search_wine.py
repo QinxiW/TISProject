@@ -43,18 +43,30 @@ def search_dataframe(user_input, dataframe):
 
     # Iterate through columns we index on
     for column in cols_to_search:
-        if 'good' in user_input:
+        if 'good' in user_input or 'great' in user_input:
             dataframe = dataframe[dataframe.sentiment == 'POS']
         # Use rapidfuzz to calculate similarity score
         similarity_scores = dataframe[column].apply(lambda x: fuzz.partial_ratio(user_input, str(x)))
+        print('similarity_scores', similarity_scores)
+
         # similarity_scores = dataframe[column].apply(lambda x: process.extractOne(user_input, str(x))[1] >= threshold)
+
         # Filter rows based on a threshold (e.g., 70% similarity)
         matches = dataframe[similarity_scores >= threshold]
-        if len(matches):
+
+        result_df = dataframe.copy()
+        result_df['similarity_scores'] = similarity_scores
+
+        # Sort the DataFrame based on similarity scores in descending order
+        result_df = result_df.sort_values(by='similarity_scores', ascending=False)
+
+        # Filter the top 3 rows
+        top3_matches = result_df.head(3)
+        if len(top3_matches):
             print('colum: ', column, 'matches: \n', matches)
 
         # Add the matches to the results DataFrame
-        results = pd.concat([results, matches])
+        results = pd.concat([results, top3_matches])
 
     # Drop duplicates from the results
     results = results.drop_duplicates()
@@ -76,6 +88,7 @@ def main():
             break
 
         # Search the DataFrame
+        user_input = user_input.lower()
         results = search_dataframe(user_input, df)
 
         # Display the results
