@@ -1,7 +1,7 @@
 """
 This tasks creates a recommender system by collaborative filtering:
 Step 1: Loads the dataframe and split into train and test sets, create user and item id
-Step 2: Build the tfidf_matrix using the test set
+Step 2: Build the tfidf_matrix using the train set for the wine descriptions
 Step 3: Create cosine_similarities for each pairs of wine and review
 Step 4: Combine other relevant features with text review data
 Step 5: Save the final models and artifacts to output files
@@ -45,7 +45,7 @@ def item(id, train_wine):
 
 
 def recommend(train_wine, item_id, num, results):
-    print('Recommending ' + str(num) + ' products similar to ' + item(item_id, train_wine) + ' ...')
+    print('Recommending ' + str(num) + ' wines similar to ' + item(item_id, train_wine) + ' ...')
     print('-----')
     recs = results[item_id][:num]
     for rec in recs:
@@ -143,22 +143,20 @@ def main():
         similar_items = [(cosine_similarities[idx][i], train_wine['wineId'][i]) for i in similar_indices]
         results[row['wineId']] = similar_items[1:]
 
-    # itemId (wineId) is grabbed from the trainset of wines
+    # run a mini test by graping a wineId from the df and get
     itemId = train_wine.loc[:, 'wineId'].values[0]
     itemName = train_wine.loc[train_wine['wineId'] == itemId, 'title'].values[0]
-
-    print(f"Using itemId {itemId} which is {itemName} \n")
+    print(f"Using itemId: {itemId} with name: {itemName} \n")
 
     # call recommend function to find and return the top num matches
     recommend(results=results, item_id=itemId, num=5, train_wine=train_wine)
 
     # compare the descriptions of the two wines to see how they match
-    description_original = train_wine.loc[train_wine['title'] == itemName, 'description'].values[0]
-
+    description_searched = train_wine.loc[train_wine['title'] == itemName, 'description'].values[0]
     description_matched = train_wine.loc[train_wine['wineId'] == results[itemId][0][1], 'description'].values[0]
 
     print(
-        f"Interacted wine description: \n{description_original} \n\nMatched wine description: \n{description_matched}")
+        f"Interacted wine description: \n{description_searched} \n\nMatched wine description: \n{description_matched}")
 
     combine_text_and_numeric(df)
 
