@@ -59,7 +59,9 @@ def search_dataframe(user_input, dataframe):
         result_df = result_df.sort_values(by='similarity_scores', ascending=False)
 
         # Filter the top 3 rows
-        top3_matches = result_df.head(3)
+        # top3_matches = result_df.head(3)
+        top3_matches = result_df[result_df['similarity_scores'] >= threshold].head(3)
+
         # if len(top3_matches):
         #     print('colum: ', column, 'matches: \n', matches)
 
@@ -80,41 +82,50 @@ def main():
     # df['wine_year_imputated'] = df['wine_year_imputated'].fillna(0).astype(int)
     print("Let's start by telling me about what wine you are looking for. Type exit to leave anytime.")
     df['combined'] = df[comb_rows].apply(lambda row: ' '.join(map(str, row)), axis=1)
+
+    search_idx = 0
     while True:
         # Get user input
-        user_input = input("you can search with a short phrases what type of wine (e.g 'sherry', 'italian') "
-                           "or wine attributes (e.g 'aromatic', 'fruit flavors'): ")
+        if search_idx == 0:
+            user_input = input("you can search with a short phrases what type of wine (e.g 'sherry', 'italian') "
+                               "or wine attributes (e.g 'aromatic', 'fruit flavors'): ")
+        else:
+            user_input = input("Any other wine search? Type exit to leave anytime: ")
 
         if user_input.lower() == 'exit':
-            print("Exiting...")
+            print("Goodbye! Thank you for visiting us today. Exiting...")
             break
 
         # Search the DataFrame
         user_input = user_input.lower()
         results = search_dataframe(user_input, df[['combined', 'variety_cleaned', 'title', 'country', 'price']])
         results['price'].fillna(0, inplace=True)
-        print("\nGot it!\n")
 
-        # Display the results
-        print("We found the following wine title based on your search:\n")
-        for i in range(len(results)):
-            titles = results.title.tolist()
-            prices = results.price.tolist()
-            countries = results.country.tolist()
-            if prices[i]:
-                price = " $" + str(int(prices[i]))
-            else:
-                price = ""
-            print(i+1, ": ", titles[i] + " from " + countries[i] + "-" + price)
-        print("\n")
-        # print(results[['variety_cleaned', 'province_leveled_cleaned']])
-
-        time.sleep(1)
-        # call rec inference for wine similarity and comments similarity
-        for variety in results['variety_cleaned'].tolist():
-            recommend_single(variety)
+        if len(results):
+            print("\nGot it! Based on ", user_input, " we found the following wine title based on your search:\n")
+            for i in range(len(results)):
+                titles = results.title.tolist()
+                prices = results.price.tolist()
+                countries = results.country.tolist()
+                if prices[i]:
+                    price = " $" + str(int(prices[i]))
+                else:
+                    price = ""
+                print(i+1, ": ", titles[i] + " from " + countries[i] + "-" + price)
             print("\n")
-            break
+            # print(results[['variety_cleaned', 'province_leveled_cleaned']])
+
+            time.sleep(1)
+            # call rec inference for wine similarity and comments similarity
+            for variety in results['variety_cleaned'].tolist():
+                recommend_single(variety)
+                print("\n")
+                break
+        else:
+            print("Sorry but we could not find anything related to your search, try search with a short phrases what type of wine (e.g 'sherry', 'italian') "
+                               "or wine attributes (e.g 'aromatic', 'fruit flavors'): ")
+
+        search_idx += 1
 
 
 if __name__ == '__main__':
