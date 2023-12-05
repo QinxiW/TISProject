@@ -1,24 +1,25 @@
 # CourseProject
 
-###
-Proposal can be found at: 
+## Documents
+Proposal can be found at: [TIS Project Proposal.pdf](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Proposal.pdf)
 
-
-Progress report can be found at: 
-
+Progress report can be found at: [TIS Project Progress_Report.pdf](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Progress%20Report.pdf)
 
 Final report can be found at: TODO
 
 
-###
-Final reports contains the details of the project layout.
-For a quick start though, 
-/Data contains:
-/Model contains:
-/Search contains:
+## Repo Structure
+Final reports contains the details of the project layout, but on a highlevel:
 
+[/Data](https://github.com/QinxiW/TISProject/tree/main/Data) contains everything exploratory on data analysis, cleanup, and creation
+
+[/Model](https://github.com/QinxiW/TISProject/tree/main/Model) contains everything model experiments, training, and evaluation
+
+[/Search](https://github.com/QinxiW/TISProject/tree/main/Search) contains everything search, retrieval, and model inference along with the artifacts needed
+
+## Quick Start 
 Always make sure you are in the parent dir level as the README when you run any of the scripts.
-
+For a quick start, run the following:
 ```angular2html
 python3 -m venv venv  # I used Python 3.11.4 for my own
 source venv/bin/activate
