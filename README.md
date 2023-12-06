@@ -5,7 +5,8 @@ Proposal can be found at: [TIS Project Proposal.pdf](https://github.com/QinxiW/T
 
 Progress report can be found at: [TIS Project Progress_Report.pdf](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Progress%20Report.pdf)
 
-Final report can be found at: TODO
+Final report can be found at: [TIS Project Documentation.pdf](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Documentation.pdf)
+
 
 Demo and slides can be found at: TODO
 
