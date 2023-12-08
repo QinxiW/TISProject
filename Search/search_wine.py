@@ -22,7 +22,7 @@ from rec_inference import recommend, recommend_single
 # and retrieve similar / recommended wines
 
 # threshold for matching [0, 100]
-threshold = 96
+threshold = 80
 
 # search_term = 'aroma'
 # column_name = 'description_lemmatized_eng'

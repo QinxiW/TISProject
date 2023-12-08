@@ -7,7 +7,6 @@ Progress report can be found at: [TIS Project Progress_Report.pdf](https://githu
 
 Final report can be found at: [TIS Project Documentation.pdf](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Documentation.pdf)
 
-
 Demo and slides can be found at: TODO
 
 
@@ -24,8 +23,8 @@ Final reports contains the details of the project layout, but on a highlevel:
 Always make sure you are in the parent dir level as the README when you run any of the scripts.
 For a quick start, run the following:
 ```angular2html
-python3 -m venv venv        # I used Python 3.11.4 but compatible with most
-source venv/bin/activate
+python3 -m venv myenv        # I used Python 3.11.4 but compatible with most
+source myenv/bin/activate
 pip install -r requirements.txt
 python Search/search_wine.py 
 ```
