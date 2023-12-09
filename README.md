@@ -7,11 +7,11 @@ Progress report can be found at: [TIS Project Progress_Report.pdf](https://githu
 
 Final report can be found at: [TIS Project Documentation.pdf](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Documentation.pdf)
 
-Demo and slides can be found at: TODO
+Demo recording can be found at: [TODO], and demo slides can be found at: [TIS Project Documentation.pptx](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Presentation.pptx)
 
 
 ## Repo Structure
-Final reports contains the details of the project layout, but on a highlevel:
+Final reports contains the details of the project layout, but on a high level:
 
 [/Data](https://github.com/QinxiW/TISProject/tree/main/Data) contains everything exploratory on data analysis, cleanup, and creation
 
