@@ -7,7 +7,7 @@ Progress report can be found at: [TIS Project Progress_Report.pdf](https://githu
 
 Final report can be found at: [TIS Project Documentation.pdf](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Documentation.pdf)
 
-Demo recording can be found at: [TODO], and demo slides can be found at: [TIS Project Documentation Slides](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Presentation.pdf)
+Demo recording can be found at: [CS410 Project Tutorial and Demo](https://mediaspace.illinois.edu/media/t/1_crc9bmkr), and demo slides can be found at: [TIS Project Documentation Slides](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Presentation.pdf)
 
 
 ## Repo Structure
