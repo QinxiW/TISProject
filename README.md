@@ -28,3 +28,5 @@ source myenv/bin/activate
 pip install -r requirements.txt
 python Search/search_wine.py 
 ```
+
+![Demo](https://example.com/path/to/your.gif)
