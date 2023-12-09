@@ -7,7 +7,7 @@ Progress report can be found at: [TIS Project Progress_Report.pdf](https://githu
 
 Final report can be found at: [TIS Project Documentation.pdf](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Documentation.pdf)
 
-Demo recording can be found at: [TODO], and demo slides can be found at: [TIS Project Documentation.pptx](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Presentation.pptx)
+Demo recording can be found at: [TODO], and demo slides can be found at: [TIS Project Documentation Slides](https://github.com/QinxiW/TISProject/blob/main/TIS%20Project%20Presentation.pdf)
 
 
 ## Repo Structure
@@ -29,4 +29,4 @@ pip install -r requirements.txt
 python Search/search_wine.py 
 ```
 
-![Demo](https://example.com/path/to/your.gif)
+![Run Demo](https://github.com/QinxiW/TISProject/blob/main/ezgif-2-8bdb364349.gif)
